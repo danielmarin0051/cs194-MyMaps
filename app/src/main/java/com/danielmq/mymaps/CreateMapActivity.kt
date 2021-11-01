@@ -2,6 +2,7 @@ package com.danielmq.mymaps
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -11,6 +12,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.danielmq.mymaps.databinding.ActivityCreateMapBinding
 
+private const val TAG = "CreateMapActivity"
 class CreateMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
@@ -40,6 +42,11 @@ class CreateMapActivity : AppCompatActivity(), OnMapReadyCallback {
      */
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+
+        mMap.setOnMapLongClickListener { latLng ->
+            Log.i(TAG, "onMapLongClickListener")
+            mMap.addMarker(MarkerOptions().position(latLng).title("my new marker").snippet("a cool snippet!"))
+        }
 
         // Add a marker in Sydney and move the camera
         val sydney = LatLng(-34.0, 151.0)

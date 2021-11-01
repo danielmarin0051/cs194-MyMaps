@@ -1,5 +1,6 @@
 package com.danielmq.mymaps
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,16 +9,22 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.danielmq.mymaps.models.Place
 import com.danielmq.mymaps.models.UserMap
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 const val EXTRA_USER_MAP = "EXTRA_USER_MAP"
+const val EXTRA_MAP_TITLE = "EXTRA_MAP_TITLE"
+private const val REQUEST_CODE = 1234
 private const val TAG = "MainActivity"
 class MainActivity : AppCompatActivity() {
     private lateinit var rvMaps: RecyclerView
+    private lateinit var fabCreateMap: FloatingActionButton
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         rvMaps = findViewById(R.id.rvMaps)
+        fabCreateMap = findViewById(R.id.fabCreateMap)
 
         val userMaps = generateSampleData()
         // Set layout manager on recycler view
@@ -32,6 +39,20 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
+
+        fabCreateMap.setOnClickListener {
+            Log.i(TAG, "Tap on FAB")
+            val intent = Intent(this@MainActivity, CreateMapActivity::class.java)
+            intent.putExtra(EXTRA_MAP_TITLE, "new map name")
+            startActivityForResult(intent, REQUEST_CODE)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun generateSampleData(): List<UserMap> {

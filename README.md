@@ -1,6 +1,6 @@
 # My Maps 
 
-## *Daiel Marin*
+## Daiel Marin
 
 **My Maps** displays a list of maps, each of which show user-defined markers with a title, description, and location. The user can also create a new map. 
 

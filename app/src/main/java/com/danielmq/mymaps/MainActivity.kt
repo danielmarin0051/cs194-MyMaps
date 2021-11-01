@@ -1,12 +1,16 @@
 package com.danielmq.mymaps
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.danielmq.mymaps.models.Place
 import com.danielmq.mymaps.models.UserMap
 
+const val EXTRA_USER_MAP = "EXTRA_USER_MAP"
+private const val TAG = "MainActivity"
 class MainActivity : AppCompatActivity() {
     private lateinit var rvMaps: RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,7 +23,15 @@ class MainActivity : AppCompatActivity() {
         // Set layout manager on recycler view
         rvMaps.layoutManager = LinearLayoutManager(this)
         // Set adapter on recycler view
-        rvMaps.adapter = MapsAdapter(this, userMaps)
+        rvMaps.adapter = MapsAdapter(this, userMaps, object: MapsAdapter.OnClickListener {
+            override fun onItemClick(position: Int) {
+                Log.i(TAG, "onItemClick $position")
+                val intent = Intent(this@MainActivity, DisplayMapActivity::class.java)
+                intent.putExtra(EXTRA_USER_MAP, userMaps[position])
+                startActivity(intent)
+            }
+
+        })
     }
 
     private fun generateSampleData(): List<UserMap> {

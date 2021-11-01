@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.danielmq.mymaps.models.UserMap
@@ -30,7 +31,9 @@ class MapsAdapter(val context: Context, val userMaps: List<UserMap>, val onClick
             onClickListener.onItemClick(position)
         }
         val textViewTitle = holder.itemView.findViewById<TextView>(R.id.tvMapTitle)
+        val textViewMapCount = holder.itemView.findViewById<TextView>(R.id.tvMapCount)
         textViewTitle.text = userMap.title
+        textViewMapCount.text = "Count: ${userMap.places.size.toString()}"
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
